@@ -1,6 +1,5 @@
 from objc_util import *
 import time
-from ctypes import *
 
 can_run_script = 1
 
