@@ -148,17 +148,3 @@ def start_script():
 	print("Welcome to the hack utility\n\nCommands:\n1.help_me()\n2.start_script()\n3.hide_statusbar()\n4.show_statusbar()\n5.change_statusbar_color(color)\n6.mess_up_resolution()\n7.fix_resolution()\n8.quit_script()")
 	
 start_script()
-
-'''a = c_double(0.5)
-b = c_double(0.5)
-c = c_double(0.5)
-d = c_double(0.5)
-
-ObjCClass('UIDimmingView').defaultDimmingColor().getHue_saturation_brightness_alpha_(a, b, c, d)
-
-
-print(a.value, b.value, c.value, d.value)
-
-NSBundle.bundleWithPath_('/System/Library/PrivateFrameworks/AccessibilityUtilities.framework').load()
-
-print(ObjCClass('AXSpringBoardServer').server().volumeLevel())'''
