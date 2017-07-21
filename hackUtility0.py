@@ -146,4 +146,6 @@ def start_script():
 	can_run_script = 1
 	print("Welcome to the hack utility\n\nCommands:\n1.help_me()\n2.start_script()\n3.hide_statusbar()\n4.show_statusbar()\n5.change_statusbar_color(color)\n6.mess_up_resolution()\n7.fix_resolution()\n8.quit_script()")
 	
-start_script()
+
+if __name__ == '__main__':
+	start_script()
