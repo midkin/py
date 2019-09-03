@@ -3,13 +3,13 @@
 # no copyrights
 
 import itertools
-
+import random
 
 # Prints the welcome message
 # Only printed in the first round
 for _ in range(40):
 	print()
-print('Tic-Tac-Toe implementation by midkin.\n\nThis is the first round, so you can play first.\nWinner plays first in the next rounds.\n')
+print('Tic-Tac-Toe implementation by midkin.\n\nThis is the first round, so you can play first.\nWinner plays first in the next rounds.\nRandom user plays first in a tie.\n')
 
 # List to hold cell values
 cells = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -47,8 +47,6 @@ def print_grid():
 def user_turn():
 	global cells, cell_logic, user_choices
 	while True:
-		for _ in range(40):
-			print()
 		print_grid()
 		choice = input('You may type 1-9 corresponding to the position you want to draw.\n')
 		try:
@@ -76,6 +74,7 @@ def computer_turn():
 			computer_choices.append(checker)
 			cells[cell_logic.index(checker)] = 'O'
 			cell_logic[cell_logic.index(checker)] = 'O'
+			return
 		
 	for pair in itertools.combinations(user_choices, 2):
 		checker = 15 - sum(pair)
@@ -104,8 +103,8 @@ def computer_turn():
 			cell_logic[cell_logic.index(i)] = 'O'
 			return
 
-def check_end_game():
-	global  end_game, user_first
+def game_ended():
+	global end_game, user_first, user_choices, computer_choices
 	
 	for comb in itertools.combinations(user_choices, 3):
 		if sum(comb) == 15:
@@ -115,8 +114,7 @@ def check_end_game():
 				print()
 			print('You win!\n')
 			score[0] += 1
-			return
-	
+			
 	for comb in itertools.combinations(computer_choices, 3):
 		if sum(comb) == 15:
 			end_game = True
@@ -125,16 +123,20 @@ def check_end_game():
 				print()
 			print('You lose!\n')
 			score[1] += 1
-			return
 	
 	if len(user_choices) + len(computer_choices) == 9:
 		end_game = True
+		user_first = random.choice((True,False))
 		for _ in range(40):
 			print()
 		print('This is a tie.\n')
 		score[0] += 1
 		score[1] += 1
-		return
+		
+		if end_game:
+			print('Score:', score[0], ':', score[1])
+					
+		return end_game
 		
 def reset():
 	global cells, cell_logic, end_game, user_choices, computer_choices
@@ -145,30 +147,37 @@ def reset():
 	computer_choices = []
 	
 def start_new():
-		while True:
-			choice = input('Wanna start a new game? (y/n)\n')
-			if choice != 'y' and choice != 'n':
-				continue
-			else:
-				return choice
+	global restart
+	while True:
+		choice = input('Wanna start a new game? (y/n)\n')
+		if choice != 'y' and choice != 'n':
+			continue
+		else:
+			restart = True
+			return choice
 	
 if __name__ == '__main__':
+	
 	while True:
 		if user_first:
 			user_turn()
 			computer_turn()
 		else:
 			computer_turn()
+			if game_ended():
+				if start_new() == 'y':
+					reset()
+					continue
+				else:
+					print('Goodbye!')
+					break
 			user_turn()
 		for _ in range(40):
 			print()
-		check_end_game()
-		if end_game:
-			print('Score:', score[0], ':', score[1])
+		if game_ended():
 			if start_new() == 'y':
 				reset()
 				continue
 			else:
 				print('Goodbye!')
 				break
-			
